@@ -2,6 +2,7 @@ from django.db import models
 
 from users.models import User
 
+from .scraping import get_list_price, get_current_price
 
 class Item(models.Model):
     """
@@ -12,16 +13,24 @@ class Item(models.Model):
     https://docs.djangoproject.com/ja/2.1/ref/models/fields/
     """
 
-    # 値段1
-    price_1 = models.IntegerField(
-        verbose_name='値段1',
+    '定価 取得'
+    def get_price1(self):
+        return get_list_price(self.url)
+    
+    '現価 取得'
+    def get_price2(self):
+        return get_current_price(self.url)
+
+    # 定価
+    list_price = models.IntegerField(
+        verbose_name='定価',
         blank=True,
         null=True,
     )
 
-    # 値段2
-    price_2 = models.IntegerField(
-        verbose_name='値段2',
+    # 現価
+    current_price = models.IntegerField(
+        verbose_name='現価',
         blank=True,
         null=True,
     )
