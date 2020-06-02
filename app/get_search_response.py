@@ -50,6 +50,6 @@ def getSearchResponse(keyword):
         response_file.write(jsonstr.encode('cp932', "ignore").decode('cp932'))
         
 if __name__ == '__main__':
-
-    target_keyword = 'ダイエット'
+    # 例 intitle:SEKIRO site:https://store.playstation.com/ja-jp/product/
+    target_keyword = 'dark soul'
     getSearchResponse(target_keyword)
