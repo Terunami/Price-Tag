@@ -1,3 +1,4 @@
+import logging
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -9,6 +10,11 @@ from django_filters.views import FilterView
 from .filters import ItemFilterSet
 from .forms import ItemForm
 from .models import Item
+
+# スクレイピングで定価、現価を取得
+from .scraping import get_list_price, get_current_price
+# HTTPメソッドをPOSTに制限するデコレータ
+from django.views.decorators.http import require_POST
 
 # 未ログインのユーザーにアクセスを許可する場合は、LoginRequiredMixinを継承から外してください。
 #
@@ -32,6 +38,7 @@ class ItemFilterView(LoginRequiredMixin, FilterView):
 
     # 1ページの表示
     paginate_by = 10
+
 
     def get(self, request, **kwargs):
         """
@@ -139,3 +146,34 @@ class ItemDeleteView(LoginRequiredMixin, DeleteView):
         item.delete()
 
         return HttpResponseRedirect(self.success_url)
+
+
+class ItemPriceUpdateView(LoginRequiredMixin, UpdateView):
+
+    model = Item
+    form_class = ItemForm
+    # template_name = ''
+    
+    def price_update(request):
+        """
+        値段更新処理
+        """
+        success_url = reverse_lazy('index')
+        
+        item_id = request.POST.getlist('item_id')[0]
+        item = Item.objects.all().get(id=item_id)
+        item.list_price = ItemPriceUpdateView.get_price1(item)
+        item.current_price = ItemPriceUpdateView.get_price2(item)
+        # item.updated_by = item.request.user
+        item.updated_at = timezone.now()
+        item.save()
+
+        return HttpResponseRedirect(success_url)
+    
+    '定価 取得'
+    def get_price1(self):
+        return get_list_price(self.url)
+    
+    '現価 取得'
+    def get_price2(self):
+        return get_current_price(self.url)

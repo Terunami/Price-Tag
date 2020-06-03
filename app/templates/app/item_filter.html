@@ -56,7 +56,8 @@
                                     <p>定価</p>
                                 </div>
                                 <div class="col-7 col-sm-9">
-                                    <p>￥{{ item.get_price1|default_if_none:"未入力" }}</p>
+                                    <!-- <p>￥{{ item.get_price1|default_if_none:"未入力" }}</p> -->
+                                    <p>{{ item.list_price|default_if_none:"未入力" }}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -64,8 +65,8 @@
                                     <p>現在価格</p>
                                 </div>
                                 <div class="col-7 col-sm-9">
-                                    <p>￥{{ item.get_price2|default_if_none:"未入力" }}</p>
-                                    <!-- <p>{{ item.price_2|default_if_none:"未入力" }}</p> -->
+                                    <!-- <p>￥{{ item.get_price2|default_if_none:"未入力" }}</p> -->
+                                    <p>{{ item.current_price|default_if_none:"未入力" }}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -103,6 +104,11 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="float-right">
+                                        <form action="{% url 'price_update' %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="number" name="item_id" value="{{ item.id }}" style="display: none;">
+                                            <input class="btn btn-outline-dark " type="submit" value="更新">
+                                        </form>
                                         <a class="btn btn-outline-dark " href="{% url 'detail' item.pk %}">詳細</a>
                                         <a class="btn btn-outline-dark " href="{% url 'update' item.pk %}">編集</a>
                                         <a class="btn btn-outline-dark " href="{% url 'delete' item.pk %}">削除</a>
