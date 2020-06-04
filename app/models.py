@@ -79,13 +79,43 @@ class Item(models.Model):
         editable=False,
     )
 
-    '定価 取得'
+    # '定価 取得'
     def get_price1(self):
         return get_list_price(self.url)
     
-    '現価 取得'
+    # '現価 取得'
     def get_price2(self):
         return get_current_price(self.url)
+    
+    # 数値の3桁ごとに,を追加
+    def price_format(num):
+        list1 = []
+        
+        num = str(num)
+        while len(num) > 0:
+            mod = len(num) % 3
+            if mod == 0:
+                head_length = 3
+            elif mod == 1:
+                head_length = 1
+            elif mod == 2:
+                head_length = 2
+
+            list1.append(num[:head_length])
+            num = num[head_length:]
+        
+        price_str = ''
+        for str1 in list1:
+            price_str = price_str + ',' + str1
+            
+        return price_str[1:]
+    
+    def list_price_format(self):
+        return Item.price_format(self.list_price)
+
+    def current_price_format(self):
+        return Item.price_format(self.current_price)
+
     
     def __str__(self):
         """

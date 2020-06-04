@@ -1,6 +1,7 @@
 import requests
+import time
 from bs4 import BeautifulSoup
-import logging
+
 
 # playstation Storeの商品ページをスクレイピング
 
@@ -21,6 +22,7 @@ def get_list_price(str_url):
         
     p_decoded = p_encoded.decode('cp932')
     
+    time.sleep(1)
     return int(p_decoded.replace(',', ''))
 
 # 現価取得
@@ -35,4 +37,5 @@ def get_current_price(str_url):
     p_encoded = price_display_price.get_text().encode('cp932', "ignore")
     p_decoded = p_encoded.decode('cp932')
 
+    time.sleep(1)
     return int(p_decoded.replace(',', ''))

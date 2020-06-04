@@ -56,8 +56,7 @@
                                     <p>定価</p>
                                 </div>
                                 <div class="col-7 col-sm-9">
-                                    <!-- <p>￥{{ item.get_price1|default_if_none:"未入力" }}</p> -->
-                                    <p>{{ item.list_price|default_if_none:"未入力" }}</p>
+                                    <p>{{ item.list_price_format|default_if_none:"取得失敗" }}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -65,18 +64,17 @@
                                     <p>現在価格</p>
                                 </div>
                                 <div class="col-7 col-sm-9">
-                                    <!-- <p>￥{{ item.get_price2|default_if_none:"未入力" }}</p> -->
-                                    <p>{{ item.current_price|default_if_none:"未入力" }}</p>
+                                    <p>{{ item.current_price_format|default_if_none:"取得失敗" }}</p>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-5 col-sm-3">
                                     <p>URL</p>
                                 </div>
                                 <div class="col-7 col-sm-9">
                                     <p>{{ item.url }}</p>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row">
                                 <div class="col-5 col-sm-3">
                                     <p>更新時間</p>
@@ -85,14 +83,14 @@
                                     <p>{{ item.updated_at|date:"Y/m/d G:i:s" }}</p>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-5 col-sm-3">
                                     <p>作成者</p>
                                 </div>
                                 <div class="col-7 col-sm-9">
                                     <p>{{ item.created_by.get_full_name }}</p>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row">
                                 <div class="col-5 col-sm-3">
                                     <p>作成時間</p>
@@ -104,14 +102,18 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="float-right">
-                                        <form action="{% url 'price_update' %}" method="POST">
+                                        <form action="{% url 'price_update' %}" method="POST" style="">
+                                            <div class="form-group">
                                             {% csrf_token %}
+                                            <a class="btn btn-outline-dark " href="{{ item.url }}">ストアへ移動</a>
                                             <input type="number" name="item_id" value="{{ item.id }}" style="display: none;">
                                             <input class="btn btn-outline-dark " type="submit" value="更新">
+                                            <!-- <a class="btn btn-outline-dark " href="{% url 'detail' item.pk %}">詳細</a> -->
+                                            <!-- <a class="btn btn-outline-dark " href="{% url 'update' item.pk %}">編集</a> -->
+                                            <a class="btn btn-outline-dark " href="{% url 'delete' item.pk %}">削除</a>
+                                            </div>
                                         </form>
-                                        <a class="btn btn-outline-dark " href="{% url 'detail' item.pk %}">詳細</a>
-                                        <a class="btn btn-outline-dark " href="{% url 'update' item.pk %}">編集</a>
-                                        <a class="btn btn-outline-dark " href="{% url 'delete' item.pk %}">削除</a>
+                                        
                                     </div>
                                 </div>
                             </div>
