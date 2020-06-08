@@ -38,6 +38,35 @@
         </ul>
     </div>
 </nav>
+<!-- item追加用　モーダル -->
+<div class="container">
+    <div class="modal fade" id="createModalLong" tabindex="-1" role="dialog" aria-labelledby="createModalLongTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="createModalLongTitle">新規追加</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>ゲームを検索</label>
+              <div class="input-group mb-3">
+                <input type="text" name="game_title" class="form-control" placeholder="タイトルを入力してください" aria-label="..." aria-describedby="button-addon2">
+                <div class="input-group-append">
+                  <button type="button" id="button-addon2" class="btn btn-outline-secondary">ボタン</button>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
+            <button type="button" class="btn btn-primary">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
 {% block content %}
 {% endblock %}
 
