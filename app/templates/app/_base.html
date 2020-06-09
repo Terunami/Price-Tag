@@ -64,20 +64,9 @@
                 </div>
               </form>
 
-              <div id="ajax-response">
-              </div>
-
               <!-- 新規モーダル　検索結果 -->
-              <div class="btn-group-vertical btn-group-toggle btn-block" data-toggle="buttons">
-                <label class="btn btn-outline-primary btn-lg active">
-                  <input type="radio" name="options" id="option1" autocomplete="off" checked>RadioA
-                </label>
-                <label class="btn btn-outline-primary">
-                  <input type="radio" name="options" id="option2" autocomplete="off">RadioB
-                </label>
-                <label class="btn btn-outline-primary">
-                  <input type="radio" name="options" id="option3" autocomplete="off">RadioC
-                </label>
+              <div id="ajax-response" class="btn-group-vertical btn-group-toggle btn-block" data-toggle="buttons">
+                <!-- ajax 出力先 -->
               </div>
 
             </div>
@@ -118,7 +107,7 @@
         })
         .done( function(data) {
           // alert("done");
-          $("#ajax-response").text(data);
+          $("#ajax-response").html(data);
         })
         .fail( function() {
           // 通信失敗時の処理を記述

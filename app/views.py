@@ -17,6 +17,9 @@ from .scraping import get_list_price, get_current_price
 from django.views.decorators.http import require_POST
 # HTMLを部分的に返すため
 from django.http import HttpResponse
+# GOOGLE検索結果をjsonで取得
+from .get_search_response import getSearchResponse
+import json
 
 # 未ログインのユーザーにアクセスを許可する場合は、LoginRequiredMixinを継承から外してください。
 #
@@ -184,12 +187,18 @@ class ItemPriceUpdateView(LoginRequiredMixin, UpdateView):
 
 class ItemSearchCreateView(LoginRequiredMixin, CreateView):
 
-    model = Item
-
     def search_title(request):
-        input_text = request.POST.getlist("game_title")
+        title = request.POST.getlist("game_title")
+        site = 'https://store.playstation.com/ja-jp/product/'
+        response = json.loads(getSearchResponse('intitle:{title} site:{site}'.format(title=title ,site=site)))
+        print(response['snapshot_ymd'])
+        button_html = ""
+        with open('app/templates/app/input_button.html') as f:
+            button_html = f.read()
 
-        return HttpResponse("OK")
+        html_text = button_html.format(url="url123", title="title123")
+
+        return HttpResponse(html_text)
 
 
 
