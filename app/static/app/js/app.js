@@ -58,4 +58,16 @@ $(function () {
     // jQuery Plugin rPageを利用
     // https://auxiliary.github.io/rpage/
     $(".pagination").rPage();
+    
+    
+    
+
+
 });
+
+
+
+
+
+
+

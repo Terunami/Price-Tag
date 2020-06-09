@@ -15,6 +15,8 @@ from .models import Item
 from .scraping import get_list_price, get_current_price
 # HTTPメソッドをPOSTに制限するデコレータ
 from django.views.decorators.http import require_POST
+# HTMLを部分的に返すため
+from django.http import HttpResponse
 
 # 未ログインのユーザーにアクセスを許可する場合は、LoginRequiredMixinを継承から外してください。
 #
@@ -177,3 +179,18 @@ class ItemPriceUpdateView(LoginRequiredMixin, UpdateView):
     '現価 取得'
     def get_price2(self):
         return get_current_price(self.url)
+
+
+
+class ItemSearchCreateView(LoginRequiredMixin, CreateView):
+
+    model = Item
+
+    def search_title(request):
+        input_text = request.POST.getlist("game_title")
+
+        return HttpResponse("OK")
+
+
+
+

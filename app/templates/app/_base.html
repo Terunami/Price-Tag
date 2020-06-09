@@ -52,14 +52,22 @@
           <div class="modal-body">
             <div class="form-group">
               <label>ゲームを検索</label>
-              <div class="input-group mb-3">
-                <input type="text" name="game_title" class="form-control" placeholder="タイトルを入力してください" aria-label="..." aria-describedby="button-addon2">
-                <div class="input-group-append">
-                  <button type="button" id="button-addon2" class="btn btn-outline-secondary">検索</button>
+
+              <!-- 新規モーダル　検索ボタン -->
+              <form id="search-title-form" class="form-group" name="search-title-form" action="{% url 'search_title' %}" method="POST">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                  <input type="text" name="game_title" class="form-control" placeholder="タイトルを入力してください" aria-label="..." aria-describedby="button-addon2">
+                  <div class="input-group-append">
+                    <button type="submit" id="google-search-button" class="btn btn-outline-secondary">検索</button>
+                  </div>
                 </div>
+              </form>
+
+              <div id="ajax-response">
               </div>
 
-              <!-- 新規モーダル　検索フォーム部分 -->
+              <!-- 新規モーダル　検索結果 -->
               <div class="btn-group-vertical btn-group-toggle btn-block" data-toggle="buttons">
                 <label class="btn btn-outline-primary btn-lg active">
                   <input type="radio" name="options" id="option1" autocomplete="off" checked>RadioA
@@ -95,6 +103,30 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.ja.min.js"></script>
 <script src="{% static "app/js/plugins/responsive-paginate.js" %}"></script>
 <script src="{% static "app/js/app.js" %}"></script>
+
+<script>
+  // 追加
+    $("#search-title-form").submit( function(event) {
+        event.preventDefault();
+        var form = $(this);
+        $.ajax({
+          url: form.prop("action"),
+          method: form.prop("method"),
+          data: form.serialize(),
+          timeout: 10000,
+          dataType: "text",
+        })
+        .done( function(data) {
+          // alert("done");
+          $("#ajax-response").text(data);
+        })
+        .fail( function() {
+          // 通信失敗時の処理を記述
+          $('#ajax-response').text('取得失敗');
+        });
+    });
+</script>
+
 </body>
 
 </html>
