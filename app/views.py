@@ -191,12 +191,22 @@ class ItemSearchCreateView(LoginRequiredMixin, CreateView):
         title = request.POST.getlist("game_title")
         site = 'https://store.playstation.com/ja-jp/product/'
         response = json.loads(getSearchResponse('intitle:{title} site:{site}'.format(title=title ,site=site)))
-        print(response['snapshot_ymd'])
+
         button_html = ""
         with open('app/templates/app/input_button.html') as f:
             button_html = f.read()
 
-        html_text = button_html.format(url="url123", title="title123")
+        html_text = ""
+
+        if int(response['response'][0]['searchInformation']['totalResults']) > 0:
+
+            for result in response['response'][0]['items']:
+                title = result['title']
+                link = result['link']
+                html_text += button_html.format(link=link, title=title)
+        else:
+
+            html_text = "<p>タイトルを入力してください<p>"
 
         return HttpResponse(html_text)
 
