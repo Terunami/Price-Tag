@@ -65,16 +65,23 @@
               </form>
 
               <!-- 新規モーダル　検索結果 -->
-              <div id="ajax-response" class="btn-group-vertical btn-group-toggle btn-block" data-toggle="buttons">
-                <!-- ajax 出力先 -->
-                <p>ここに検索結果が表示されます</p>
+              <div>
+                <form id="create-item-form" action="{% url 'create_item' %}" name="create-item-form" method="POST">
+                  {% csrf_token %}
+                  <div id="ajax-response" class="btn-group-vertical btn-group-toggle btn-block" data-toggle="buttons">
+                    <!-- ajax 出力先 -->
+                    <p>ここに検索結果が表示されます</p>
+                  </div>
+                  <button type="submit" id="submit_btn" onclick="submit_btnClick();" style="display: none;"></button>
+                  <input type="hidden" id="radio_num" name="radio_num">
+                </form>
               </div>
 
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
-            <button type="button" class="btn btn-primary">保存</button>
+            <button type="button" id="double_btn" class="btn btn-primary" onclick="double_btnClick();">保存</button>
           </div>
         </div>
       </div>
@@ -114,6 +121,41 @@
           // 通信失敗時の処理を記述
           $('#ajax-response').text('取得失敗');
         });
+    });
+
+    function double_btnClick(){
+      // alert('double_buttonがクリックされました')
+      document.getElementById("submit_btn").click();
+    }
+
+    function submit_btnClick(){
+      alert('submit_buttonがクリックされました')
+    }
+
+    // function labelClick(){
+    //   // 要素が含まれる集合オブジェクト (HTMLCollectionなど)
+    //   var elements = document.getElementsByClassName("label_button");
+
+    //   // 番号を知りたい要素
+    //   var element = document.getElementById("");
+
+    //   // HTMLCollectionから配列を作成
+    //   elements = [].slice.call( elements );
+
+    //   // 要素の順番を取得
+    //   var index = elements.indexOf( element ) ; // 2
+    //   document.getElementById("radio_num").value = 1;
+    // }
+
+    $(".label_button").click(function() {
+      console.log('hoge');
+      var id = $(this).id;
+      var elements = document.getElementsByClassName("label_button");
+      var element = document.getElementById($(this).id);
+      elements = [].slice.call( elements );
+      var index = elements.indexOf( element ) ;
+      document.getElementById("radio_num").value = index;
+
     });
 </script>
 

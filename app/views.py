@@ -193,22 +193,46 @@ class ItemSearchCreateView(LoginRequiredMixin, CreateView):
         response = json.loads(getSearchResponse('intitle:{title} site:{site}'.format(title=title ,site=site)))
 
         button_html = ""
-        with open('app/templates/app/input_button.html') as f:
+        # submit_button = ""
+        with open('app/templates/app/label_button.html') as f:
             button_html = f.read()
+        # with open('app/templates/app/submit_button.html') as f:
+        #     submit_html = f.read()
 
         html_text = ""
+        id_num = 0
 
         if int(response['response'][0]['searchInformation']['totalResults']) > 0:
 
             for result in response['response'][0]['items']:
                 title = result['title']
                 link = result['link']
-                html_text += button_html.format(link=link, title=title)
+                html_text += button_html.format(link=link, title=title, id_num=id_num)
+                id_num+=1
+            # html_text += submit_html
         else:
 
             html_text = "<p>タイトルを入力してください<p>"
 
         return HttpResponse(html_text)
+
+    def create_item(request):
+
+        model = Item
+        form_class = ItemForm
+        success_url = reverse_lazy('index')
+
+        title = request.POST.getlist("title")[0]
+        radio_num = request.POST.getlist("radio_num")[0]
+        url = request.POST.getlist("link")[radio_num]
+
+        print(title)
+        print(url)
+
+        Item.objects.create(title=title, url=url)
+        print("OK")
+        return HttpResponseRedirect(success_url)
+
 
 
 
