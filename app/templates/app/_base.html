@@ -73,7 +73,7 @@
                     <p>ここに検索結果が表示されます</p>
                   </div>
                   <button type="submit" id="submit_btn" onclick="submit_btnClick();" style="display: none;"></button>
-                  <input type="hidden" id="radio_num" name="radio_num">
+                  <input type="number" id="radio_num" name="radio_num">
                 </form>
               </div>
 
@@ -147,16 +147,28 @@
     //   document.getElementById("radio_num").value = 1;
     // }
 
-    $(".label_button").click(function() {
-      console.log('hoge');
-      var id = $(this).id;
-      var elements = document.getElementsByClassName("label_button");
-      var element = document.getElementById($(this).id);
-      elements = [].slice.call( elements );
-      var index = elements.indexOf( element ) ;
-      document.getElementById("radio_num").value = index;
+    // $(".label_button").hasclass("active").(function() {
+    //   console.log('hoge');
+    //   var id = $(this).id;
+    //   var elements = document.getElementsByClassName("label_button");
+    //   var element = document.getElementById($(this).id);
+    //   elements = [].slice.call( elements );
+    //   var index = elements.indexOf( element ) ;
+    //   document.getElementById("radio_num").value = index;
 
-    });
+    // });
+
+    function label_buttonClick(id){
+      // console.log('hoge');
+      // var id = id;
+      // var elements = document.getElementsByClassName("label_button");
+      // console.log(id)
+      // var element = document.getElementById(id);
+      // elements = [].slice.call( elements );
+      // var index = elements.indexOf( element ) ;
+      document.getElementById("radio_num").value = id;
+      console.log(id);
+    }
 </script>
 
 </body>

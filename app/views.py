@@ -224,14 +224,17 @@ class ItemSearchCreateView(LoginRequiredMixin, CreateView):
 
         title = request.POST.getlist("title")[0]
         radio_num = request.POST.getlist("radio_num")[0]
-        url = request.POST.getlist("link")[radio_num]
+        url = request.POST.getlist("link")[int(radio_num)]
 
-        print(title)
-        print(url)
+        list_price = get_list_price(url)
+        current_price = get_current_price(url)
+        created_at = timezone.now()
+        updated_at = timezone.now()
 
-        Item.objects.create(title=title, url=url)
-        print("OK")
+        Item.objects.create(title=title, url=url, list_price=list_price, current_price=current_price, created_at=created_at, updated_at=updated_at)
+        print("create")
         return HttpResponseRedirect(success_url)
+
 
 
 
