@@ -23,7 +23,14 @@ def get_list_price(str_url):
     p_decoded = p_encoded.decode('cp932')
     
     time.sleep(1)
-    return int(p_decoded.replace(',', ''))
+
+    if is_int(p_decoded.replace(',', '')):
+        return int(p_decoded.replace(',', ''))
+    else:
+        if p_decoded == '無料':
+            return 0
+        else:
+            return p_decoded
 
 # 現価取得
 def get_current_price(str_url):
@@ -38,4 +45,32 @@ def get_current_price(str_url):
     p_decoded = p_encoded.decode('cp932')
 
     time.sleep(1)
-    return int(p_decoded.replace(',', ''))
+    
+    if is_int(p_decoded.replace(',', '')):
+        return int(p_decoded.replace(',', ''))
+    else:
+        if p_decoded == '無料':
+            return 0
+        else:
+            return p_decoded
+
+
+# int型に変換可能かどうかを返す
+def is_int(s):
+    try:
+        int(s)
+    except:
+        return False
+    return True
+
+
+
+
+
+
+
+
+
+
+
+

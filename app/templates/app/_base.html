@@ -12,6 +12,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/8d42187544.js" crossorigin="anonymous"></script>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css">
     <link href="{% static "app/css/app.css" %}" rel="stylesheet">
@@ -19,7 +20,7 @@
 
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-light ">
-    <a class="navbar-brand" href="#">Price Tag</a>
+    <a class="navbar-brand" href="{% url 'index' %}">Price Tag <i class="fas fa-tags"></i></a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#Navber" aria-controls="Navber"
             aria-expanded="false"
             aria-label="ナビゲーションの切替">
@@ -73,7 +74,7 @@
                     <p>ここに検索結果が表示されます</p>
                   </div>
                   <button type="submit" id="submit_btn" onclick="submit_btnClick();" style="display: none;"></button>
-                  <input type="number" id="radio_num" name="radio_num">
+                  <input type="number" id="radio_num" name="radio_num" style="display: none">
                 </form>
               </div>
 
@@ -128,9 +129,9 @@
       document.getElementById("submit_btn").click();
     }
 
-    function submit_btnClick(){
-      alert('submit_buttonがクリックされました')
-    }
+    // function submit_btnClick(){
+    //   alert('submit_buttonがクリックされました')
+    // }
 
     // function labelClick(){
     //   // 要素が含まれる集合オブジェクト (HTMLCollectionなど)
