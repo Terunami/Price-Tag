@@ -12,14 +12,14 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="{% static 'app/css/app.css' %}">
     <script src="https://kit.fontawesome.com/8d42187544.js" crossorigin="anonymous"></script>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css">
-    <link href="{% static "app/css/app.css" %}" rel="stylesheet">
 </head>
 
 <body>
-<nav class="navbar navbar-expand-md navbar-light bg-light ">
+<nav class="navbar navbar-expand-md navbar-light nav-color">
     <a class="navbar-brand" href="{% url 'index' %}">Price Tag <i class="fas fa-tags"></i></a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#Navber" aria-controls="Navber"
             aria-expanded="false"
@@ -171,6 +171,10 @@
       console.log(id);
     }
 </script>
+
+<style>
+  .nav-color{background-color:cornflowerblue;}
+</style>
 
 </body>
 

@@ -43,78 +43,98 @@
                 <ul class="list-group">
                     {% for item in item_list %}
                         <li class="list-group-item">
-                            {# item_detail_contents.html を参考に必要な項目を追加してください #}
                             <div class="row">
-                                <div class="col-5 col-sm-3">
-                                    <p>タイトル</p>
+                                <div class="col-2 col-sm-2">
+                                    <!-- <span class="fab fa-playstation" style="font-size:100%"></span> -->
+                                    <span class="badge badge-primary">PS4</span>
                                 </div>
-                                <div class="col-7 col-sm-9">
-                                    <p>{{ item.title|default_if_none:"未入力" }}</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-5 col-sm-3">
-                                    <p>定価</p>
-                                </div>
-                                <div class="col-7 col-sm-9">
-                                    <p>{{ item.list_price_format|default_if_none:"取得失敗" }}</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-5 col-sm-3">
-                                    <p>現在価格</p>
-                                </div>
-                                <div class="col-7 col-sm-9">
-                                    <p>{{ item.current_price_format|default_if_none:"取得失敗" }}</p>
-                                </div>
-                            </div>
-                            <!-- <div class="row">
-                                <div class="col-5 col-sm-3">
-                                    <p>URL</p>
-                                </div>
-                                <div class="col-7 col-sm-9">
-                                    <p>{{ item.url }}</p>
-                                </div>
-                            </div> -->
-                            <div class="row">
-                                <div class="col-5 col-sm-3">
-                                    <p>更新時間</p>
-                                </div>
-                                <div class="col-7 col-sm-9">
-                                    <p>{{ item.updated_at|date:"Y/m/d G:i:s" }}</p>
-                                </div>
-                            </div>
-                            <!-- <div class="row">
-                                <div class="col-5 col-sm-3">
-                                    <p>作成者</p>
-                                </div>
-                                <div class="col-7 col-sm-9">
-                                    <p>{{ item.created_by.get_full_name }}</p>
-                                </div>
-                            </div> -->
-                            <div class="row">
-                                <div class="col-5 col-sm-3">
-                                    <p>作成時間</p>
-                                </div>
-                                <div class="col-7 col-sm-9">
-                                    <p>{{ item.created_at|date:"Y/m/d G:i:s" }}</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="float-right">
-                                        <form action="{% url 'price_update' %}" method="POST" style="">
-                                            <div class="form-group">
-                                            {% csrf_token %}
-                                            <a class="btn btn-outline-dark " href="{{ item.url }}">ストアへ移動</a>
-                                            <input type="number" name="item_id" value="{{ item.id }}" style="display: none;">
-                                            <input class="btn btn-outline-dark " type="submit" value="更新">
-                                            <!-- <a class="btn btn-outline-dark " href="{% url 'detail' item.pk %}">詳細</a> -->
-                                            <!-- <a class="btn btn-outline-dark " href="{% url 'update' item.pk %}">編集</a> -->
-                                            <a class="btn btn-outline-dark " href="{% url 'delete' item.pk %}">削除</a>
+                                <div class="col-10 col-sm-10">
+                                    {# item_detail_contents.html を参考に必要な項目を追加してください #}
+                                    <div class="row">
+                                        <!-- <div class="col-5 col-sm-2">
+                                            <p>タイトル</p>
+                                        </div>
+                                        <div class="col-7 col-sm-10">
+                                            <p>{{ item.title|default_if_none:"未入力" }}</p>
+                                        </div> -->
+                                        <div class="col-12 col-sm-12">
+                                            <p>{{ item.title|default_if_none:"未入力" }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 col-sm-2">
+                                            <p>定価</p>
+                                        </div>
+                                        <div class="col-9 col-sm-10">
+                                            <p>¥{{ item.list_price_format|default_if_none:"取得失敗" }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 col-sm-2">
+                                            <p>時価</p>
+                                        </div>
+                                        <div class="col-9 col-sm-10">
+                                            {% if item.list_price > item.current_price %}
+                                                <p>
+                                                    <span style="color: red; font-weight: bold">
+                                                        ¥{{ item.current_price_format|default_if_none:"取得失敗" }}
+                                                    </span>
+                                                    <span class="badge badge-pill badge-danger">セール中！</span>
+                                                </p>
+                                            {% else %}
+                                                <p>¥{{ item.current_price_format|default_if_none:"取得失敗" }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <!-- <div class="row">
+                                        <div class="col-5 col-sm-3">
+                                            <p>URL</p>
+                                        </div>
+                                        <div class="col-7 col-sm-9">
+                                            <p>{{ item.url }}</p>
+                                        </div>
+                                    </div> -->
+                                    <!-- <div class="row">
+                                        <div class="col-5 col-sm-2">
+                                            <p>更新時間</p>
+                                        </div>
+                                        <div class="col-7 col-sm-10">
+                                            <p>{{ item.updated_at|date:"Y/m/d G:i:s" }}</p>
+                                        </div>
+                                    </div> -->
+                                    <!-- <div class="row">
+                                        <div class="col-5 col-sm-3">
+                                            <p>作成者</p>
+                                        </div>
+                                        <div class="col-7 col-sm-9">
+                                            <p>{{ item.created_by.get_full_name }}</p>
+                                        </div>
+                                    </div> -->
+                                    <!-- <div class="row">
+                                        <div class="col-5 col-sm-2">
+                                            <p>作成時間</p>
+                                        </div>
+                                        <div class="col-7 col-sm-10">
+                                            <p>{{ item.created_at|date:"Y/m/d G:i:s" }}</p>
+                                        </div>
+                                    </div> -->
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="float-right">
+                                                <form action="{% url 'price_update' %}" method="POST" style="">
+                                                    <div class="form-group">
+                                                    {% csrf_token %}
+                                                    <a class="btn btn-outline-dark " href="{{ item.url }}">ストアへ移動</a>
+                                                    <input type="number" name="item_id" value="{{ item.id }}" style="display: none;">
+                                                    <input class="btn btn-outline-dark " type="submit" value="更新">
+                                                    <!-- <a class="btn btn-outline-dark " href="{% url 'detail' item.pk %}">詳細</a> -->
+                                                    <!-- <a class="btn btn-outline-dark " href="{% url 'update' item.pk %}">編集</a> -->
+                                                    <a class="btn btn-outline-dark " href="{% url 'delete' item.pk %}">削除</a>
+                                                    </div>
+                                                </form>
+                                                
                                             </div>
-                                        </form>
-                                        
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -135,8 +155,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="float-right mt-1 mb-3">
-                    <a class="btn btn-outline-dark" href="{% url 'create' %}">新規</a>
+                    <!-- <a class="btn btn-outline-dark" href="{% url 'create' %}">新規</a> -->
                     <a class="btn btn-outline-dark" data-toggle="modal" data-target="#myModal" href="#">検索</a>
+                    <a class="btn btn-outline-dark" data-toggle="modal" data-target="#createModalLong" href="#">新規</a>
                 </div>
             </div>
         </div>
