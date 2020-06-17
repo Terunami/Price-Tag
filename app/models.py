@@ -2,8 +2,6 @@ from django.db import models
 
 from users.models import User
 
-from .scraping import get_list_price, get_current_price
-
 class Item(models.Model):
     """
     データ定義クラス
@@ -79,13 +77,6 @@ class Item(models.Model):
         editable=False,
     )
 
-    # '定価 取得'
-    def get_price1(self):
-        return get_list_price(self.url)
-    
-    # '現価 取得'
-    def get_price2(self):
-        return get_current_price(self.url)
     
     # 数値の3桁ごとに,を追加
     def price_format(num):

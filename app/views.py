@@ -12,7 +12,7 @@ from .forms import ItemForm
 from .models import Item
 
 # スクレイピングで定価、現価を取得
-from .scraping import get_list_price, get_current_price
+from .scraping import playstation
 # HTTPメソッドをPOSTに制限するデコレータ
 from django.views.decorators.http import require_POST
 # HTMLを部分的に返すため
@@ -177,11 +177,11 @@ class ItemPriceUpdateView(LoginRequiredMixin, UpdateView):
     
     '定価 取得'
     def get_price1(self):
-        return get_list_price(self.url)
+        return playstation.get_list_price(self.url)
     
     '現価 取得'
     def get_price2(self):
-        return get_current_price(self.url)
+        return playstation.get_current_price(self.url)
 
 
 
@@ -226,8 +226,8 @@ class ItemSearchCreateView(LoginRequiredMixin, CreateView):
         radio_num = request.POST.getlist("radio_num")[0]
         url = request.POST.getlist("link")[int(radio_num)]
 
-        list_price = get_list_price(url)
-        current_price = get_current_price(url)
+        list_price = playstation.get_list_price(url)
+        current_price = playstation.get_current_price(url)
         created_at = timezone.now()
         updated_at = timezone.now()
 
