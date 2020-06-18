@@ -103,7 +103,7 @@
 <script src="{% static "app/js/app.js" %}"></script>
 
 <script>
-  // 追加
+  // item追加検索用　非同期通信
     $("#search-title-form").submit( function(event) {
         event.preventDefault();
         var form = $(this);
@@ -128,6 +128,48 @@
       // alert('double_buttonがクリックされました')
       document.getElementById("submit_btn").click();
     }
+
+    // item list_price current_price update用　非同期通信
+    $(".price-update-form").submit( function(event) {
+        event.preventDefault();
+        var form = $(this);
+
+        console.log("test");
+        console.log($(this));
+        var list_price_html = "";
+        var current_price_html = "";
+        var json_data = {};
+
+        $.ajax({
+          url: form.prop("action"),
+          method: form.prop("method"),
+          data: form.serialize(),
+          timeout: 10000,
+          dataType: "text",
+          async:false,
+        })
+        .done( function(data) {
+          // alert("done");
+          var response_data = "";
+          list_price_html = data["list_price"];
+          current_price_html = data["current_price"];
+          console.log(data)
+          console.log(list_price_html);
+          console.log(current_price_html);
+        })
+        .fail( function() {
+          // 通信失敗時の処理を記述
+          list_price_html = "取得失敗";
+        });
+
+        // console.log(response_data);
+        console.log("load");
+        // var json_obj = json.parse(json_data);
+        $(this).parent(".row").parent().find(".list-price-place").html(list_price_html);
+        $(this).parent(".row").parent().find(".currnet-price-place").html(current_price_html);
+
+        console.log("end");
+    });
 
     // function submit_btnClick(){
     //   alert('submit_buttonがクリックされました')
@@ -174,6 +216,8 @@
 
 <style>
   .nav-color{background-color:cornflowerblue;}
+
+  .sale-price{color: red, font-weight: bold;}
 </style>
 
 </body>

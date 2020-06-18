@@ -66,7 +66,7 @@
                                             <p>定価</p>
                                         </div>
                                         <div class="col-9 col-sm-10">
-                                            <p>¥{{ item.list_price_format|default_if_none:"取得失敗" }}</p>
+                                            <p class="list_price_place">¥{{ item.list_price_format|default_if_none:"取得失敗" }}</p>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -75,14 +75,14 @@
                                         </div>
                                         <div class="col-9 col-sm-10">
                                             {% if item.list_price > item.current_price %}
-                                                <p>
-                                                    <span style="color: red; font-weight: bold">
+                                                <p class="current-price-place">
+                                                    <span class="sale-price">
                                                         ¥{{ item.current_price_format|default_if_none:"取得失敗" }}
                                                     </span>
                                                     <span class="badge badge-pill badge-danger">セール中！</span>
                                                 </p>
                                             {% else %}
-                                                <p>¥{{ item.current_price_format|default_if_none:"取得失敗" }}</p>
+                                                <p class="current-price-place">¥{{ item.current_price_format|default_if_none:"取得失敗" }}</p>
                                             {% endif %}
                                         </div>
                                     </div>
@@ -121,7 +121,7 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="float-right">
-                                                <form action="{% url 'price_update' %}" method="POST" style="">
+                                                <form action="{% url 'price_update' %}" class="price-update-form" method="POST" style="">
                                                     <div class="form-group">
                                                     {% csrf_token %}
                                                     <a class="btn btn-outline-dark " href="{{ item.url }}">ストアへ移動</a>

@@ -1,6 +1,6 @@
 import logging
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import DetailView
@@ -158,12 +158,11 @@ class ItemPriceUpdateView(LoginRequiredMixin, UpdateView):
     model = Item
     form_class = ItemForm
     # template_name = ''
-    
+
     def price_update(request):
         """
-        値段更新処理
+        値段更新処理 非同期通信
         """
-        success_url = reverse_lazy('index')
         
         item_id = request.POST.getlist('item_id')[0]
         item = Item.objects.all().get(id=item_id)
@@ -173,7 +172,30 @@ class ItemPriceUpdateView(LoginRequiredMixin, UpdateView):
         item.updated_at = timezone.now()
         item.save()
 
-        return HttpResponseRedirect(success_url)
+        with open('app/templates/app/sale_price1.html') as f:
+            sale_price1_html = f.read()
+
+        if item.list_price > item.current_price:
+            return JsonResponse({"list_price": item.list_price, "current_price": sale_price1_html.format(sale_price=item.current_price)})
+            # return HttpResponse([item.list_price, sale_price1_html.format(sale_price=item.current_price)])
+        else:
+            return JsonResponse({"list_price": item.list_price, "current_price": item.current_price})
+    
+    # def price_update(request):
+    #     """
+    #     値段更新処理 同期通信
+    #     """
+    #     success_url = reverse_lazy('index')
+        
+    #     item_id = request.POST.getlist('item_id')[0]
+    #     item = Item.objects.all().get(id=item_id)
+    #     item.list_price = ItemPriceUpdateView.get_price1(item)
+    #     item.current_price = ItemPriceUpdateView.get_price2(item)
+    #     # item.updated_by = item.request.user
+    #     item.updated_at = timezone.now()
+    #     item.save()
+
+    #     return HttpResponseRedirect(success_url)
     
     '定価 取得'
     def get_price1(self):
