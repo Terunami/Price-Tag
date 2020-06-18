@@ -134,11 +134,9 @@
         event.preventDefault();
         var form = $(this);
 
-        console.log("test");
-        console.log($(this));
+        console.log("price_update start");
         var list_price_html = "";
         var current_price_html = "";
-        var json_data = {};
 
         $.ajax({
           url: form.prop("action"),
@@ -150,10 +148,11 @@
         })
         .done( function(data) {
           // alert("done");
-          var response_data = "";
-          list_price_html = data["list_price"];
-          current_price_html = data["current_price"];
-          console.log(data)
+          var response_data = JSON.parse(data);;
+          list_price_html = response_data["list_price"];
+          current_price_html = response_data["current_price"];
+          // console.log(typeof(data));
+          // console.log(typeof(response_data));
           console.log(list_price_html);
           console.log(current_price_html);
         })
@@ -165,10 +164,15 @@
         // console.log(response_data);
         console.log("load");
         // var json_obj = json.parse(json_data);
-        $(this).parent(".row").parent().find(".list-price-place").html(list_price_html);
-        $(this).parent(".row").parent().find(".currnet-price-place").html(current_price_html);
+        $(this).parent().parent().parent().parent().find(".list-price-place").html(list_price_html);
+        $(this).parent().parent().parent().parent().find(".current-price-place").html(current_price_html);
+        // $(this).parent(".row").parent().find(".currnet-price-place").html(current_price_html);
+
+        console.log($(this).parent().parent().parent().parent().find(".list-price-place").html());
+        console.log($(this).parent().parent().parent().parent().find(".current-price-place").html());
 
         console.log("end");
+
     });
 
     // function submit_btnClick(){

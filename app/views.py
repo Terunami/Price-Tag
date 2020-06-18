@@ -176,10 +176,10 @@ class ItemPriceUpdateView(LoginRequiredMixin, UpdateView):
             sale_price1_html = f.read()
 
         if item.list_price > item.current_price:
-            return JsonResponse({"list_price": item.list_price, "current_price": sale_price1_html.format(sale_price=item.current_price)})
+            return JsonResponse({"list_price": "¥" + Item.price_format(item.list_price), "current_price": sale_price1_html.format(sale_price=Item.price_format(item.current_price))})
             # return HttpResponse([item.list_price, sale_price1_html.format(sale_price=item.current_price)])
         else:
-            return JsonResponse({"list_price": item.list_price, "current_price": item.current_price})
+            return JsonResponse({"list_price": "¥" + Item.price_format(item.list_price), "current_price": "¥" + Item.price_format(item.current_price)})
     
     # def price_update(request):
     #     """
