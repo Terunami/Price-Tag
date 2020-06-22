@@ -39,6 +39,13 @@ class Item(models.Model):
         null=True,
     )
 
+    # 作成者(ユーザー) filter用
+    user = models.TextField(
+        verbose_name='作成者2',
+        blank=True,
+        null=True,
+    )
+
     # 作成者(ユーザー)
     created_by = models.ForeignKey(
         User,

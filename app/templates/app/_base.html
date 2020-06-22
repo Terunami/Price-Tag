@@ -27,11 +27,13 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="Navber">
+        {% if request.user.id == 1 %}
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'admin:index' %}">管理画面</a>
             </li>
         </ul>
+        {% endif %}
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'admin:logout' %}">ログアウト</a>
@@ -215,6 +217,14 @@
       // var index = elements.indexOf( element ) ;
       document.getElementById("radio_num").value = id;
       console.log(id);
+    }
+
+    // ウィンドウ起動時に実行
+    window.onload = function(){
+
+      var user_form = document.getElementById("div_id_user");
+      user_form.style.display = "none";
+
     }
 </script>
 

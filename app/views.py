@@ -68,7 +68,8 @@ class ItemFilterView(LoginRequiredMixin, FilterView):
         ソート順・デフォルトの絞り込みを指定
         """
         # デフォルトの並び順として、登録時間（降順）をセットする。
-        return Item.objects.all().order_by('-created_at')
+        # print(self.request.user)
+        return Item.objects.all().filter(user__exact=self.request.user)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         """
@@ -107,6 +108,7 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
         登録処理
         """
         item = form.save(commit=False)
+        item.user = self.request.user
         item.created_by = self.request.user
         item.created_at = timezone.now()
         item.updated_by = self.request.user
@@ -252,8 +254,11 @@ class ItemSearchCreateView(LoginRequiredMixin, CreateView):
         current_price = playstation.get_current_price(url)
         created_at = timezone.now()
         updated_at = timezone.now()
+        created_by = request.user
+        updated_by = request.user
+        user = request.user
 
-        Item.objects.create(title=title, url=url, list_price=list_price, current_price=current_price, created_at=created_at, updated_at=updated_at)
+        Item.objects.create(title=title, url=url, list_price=list_price, current_price=current_price, created_at=created_at, updated_at=updated_at, created_by=created_by, updated_by=updated_by, user=user)
         print("create")
         return HttpResponseRedirect(success_url)
 
