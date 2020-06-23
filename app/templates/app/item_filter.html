@@ -126,7 +126,7 @@
                                                     {% csrf_token %}
                                                     <a class="btn btn-outline-dark " href="{{ item.url }}">ストアへ移動</a>
                                                     <input type="number" name="item_id" value="{{ item.id }}" style="display: none;">
-                                                    <input class="btn btn-outline-dark " type="submit" value="更新">
+                                                    <input class="btn btn-outline-dark price-update-button" type="submit" value="更新">
                                                     <!-- <a class="btn btn-outline-dark " href="{% url 'detail' item.pk %}">詳細</a> -->
                                                     <!-- <a class="btn btn-outline-dark " href="{% url 'update' item.pk %}">編集</a> -->
                                                     <a class="btn btn-outline-dark " href="{% url 'delete' item.pk %}">削除</a>

@@ -46,7 +46,7 @@ def getSearchResponse(keyword):
     out = {'snapshot_ymd': today, 'snapshot_timestamp': timestamp, 'response': []}
     out['response'] = response
     jsonstr = json.dumps(out, ensure_ascii=False)
-    print(jsonstr)
+    # print(jsonstr)
     return jsonstr
     # with open(os.path.join(save_response_dir, 'response_' + today + '.json'), mode='w') as response_file:
     #     response_file.write(jsonstr.encode('cp932', "ignore").decode('cp932'))
