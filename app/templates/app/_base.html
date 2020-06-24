@@ -137,6 +137,11 @@
         var form = $(this);
 
         console.log("price_update start");
+
+        // 二重送信防止のため一時ロック
+        // console.log($(this).find(".price-update-button"));
+        $(this).find(".price-update-button").prop("disabled", true);
+
         var list_price_html = "";
         var current_price_html = "";
 
@@ -173,6 +178,8 @@
         // console.log($(this).parent().parent().parent().parent().find(".list-price-place").html());
         // console.log($(this).parent().parent().parent().parent().find(".current-price-place").html());
 
+        // ロック解除
+        $(this).find(".price-update-button").prop("disabled", false);
         console.log("end");
 
     });
